@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UriPoint - Universal Network Endpoint Management</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Add Prism CSS for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-okaidia.min.css">
     <style>
         :root {
             --primary-color: #3498db;
@@ -12,7 +14,7 @@
             --accent-color: #e74c3c;
             --light-color: #ecf0f1;
             --dark-color: #2c3e50;
-            --code-bg: #f8f9fa;
+            --code-bg: #272822; /* Match Prism Okaidia theme */
         }
 
         * {
@@ -206,7 +208,17 @@
             padding: 1.5rem;
             margin: 1.5rem 0;
             overflow-x: auto;
-            font-family: 'Courier New', Courier, monospace;
+        }
+
+        /* Remove default styling for code blocks that will use Prism */
+        .code-example pre {
+            margin: 0;
+            padding: 0;
+        }
+
+        .code-example code {
+            font-family: 'Fira Code', 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
         }
 
         .installation {
@@ -247,6 +259,7 @@
 
         .tab.active {
             background-color: var(--code-bg);
+            color: white;
             font-weight: bold;
         }
 
@@ -263,7 +276,7 @@
         }
 
         .ascii-diagram {
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Fira Code', 'Courier New', Courier, monospace;
             white-space: pre;
             overflow-x: auto;
             background-color: white;
@@ -447,7 +460,11 @@
                     <h3>IoT</h3>
                     <ul>
                         <li>MQTT</li>
-                        <li>CoAP</li>
+
+
+
+
+                                                <li>CoAP</li>
                     </ul>
                 </div>
                 <div class="protocol-category">
@@ -466,7 +483,6 @@
                 </div>
                 <div class="protocol-category">
                     <h3>Other</h3>
-                    <ul>
                         <li>Email (SMTP, IMAP)</li>
                         <li>File Transfer (FTP, SFTP)</li>
                         <li>Name Resolution (DNS)</li>
@@ -484,13 +500,13 @@
             </div>
             <h3>Basic Installation</h3>
             <div class="code-example">
-                <code>pip install uripoint</code>
+                <pre><code class="language-bash">pip install uripoint</code></pre>
             </div>
 
             <h3>Configuration</h3>
             <p>UriPoint uses a YAML-based configuration file stored at <code>~/.uripoint_config.yaml</code>:</p>
             <div class="code-example">
-                <pre><code># ~/.uripoint_config.yaml
+                <pre><code class="language-yaml"># ~/.uripoint_config.yaml
 endpoints:
   - name: api-endpoint
     uri: http://localhost:8080/api
@@ -530,7 +546,7 @@ endpoints:
                 <div class="example-card">
                     <h3>CLI Commands</h3>
                     <div class="code-example">
-                        <pre><code>uripoint [options] &lt;command&gt;
+                        <pre><code class="language-bash">uripoint [options] &lt;command&gt;
 
 # List all configured endpoints
 uripoint --list
@@ -549,7 +565,7 @@ uripoint --detach "http://localhost:9000/api/hello"</code></pre>
                 <div class="example-card">
                     <h3>Python API</h3>
                     <div class="code-example">
-                        <pre><code>from uripoint import UriPointCLI
+                        <pre><code class="language-python">from uripoint import UriPointCLI
 
 cli = UriPointCLI()
 cli.create_endpoint(
@@ -576,7 +592,7 @@ cli.serve()</code></pre>
                 </div>
                 <div class="tab-content active" id="http-python">
                     <div class="code-example">
-                        <pre><code>from uripoint import UriPointCLI
+                        <pre><code class="language-python">from uripoint import UriPointCLI
 
 cli = UriPointCLI()
 cli.create_endpoint(
@@ -590,7 +606,7 @@ cli.create_endpoint(
                 </div>
                 <div class="tab-content" id="http-cli">
                     <div class="code-example">
-                        <pre><code># Create endpoint
+                        <pre><code class="language-bash"># Create endpoint
 uripoint --uri http://localhost:8000/api/users --data '{"response": {"users": []}}' --method GET POST PUT DELETE
 
 # Test endpoint
@@ -607,7 +623,7 @@ curl -X GET http://localhost:8000/api/users</code></pre>
                 </div>
                 <div class="tab-content active" id="mqtt-python">
                     <div class="code-example">
-                        <pre><code>cli.create_endpoint(
+                        <pre><code class="language-python">cli.create_endpoint(
     uri='mqtt://localhost:1883/sensors/temperature',
     data={
         'topic': 'sensors/temperature',
@@ -622,7 +638,7 @@ curl -X GET http://localhost:8000/api/users</code></pre>
                 </div>
                 <div class="tab-content" id="mqtt-cli">
                     <div class="code-example">
-                        <pre><code># Create endpoint
+                        <pre><code class="language-bash"># Create endpoint
 uripoint --uri mqtt://localhost:1883/sensors/temperature --data '{"topic": "sensors/temperature", "qos": 1}'
 
 # Test endpoint
@@ -639,7 +655,7 @@ mosquitto_pub -h localhost -p 1883 -t sensors/temperature -m '{"value": 22.5}'</
                 </div>
                 <div class="tab-content active" id="rtsp-python">
                     <div class="code-example">
-                        <pre><code>cli.create_endpoint(
+                        <pre><code class="language-python">cli.create_endpoint(
     uri='rtsp://localhost:8554/camera1',
     data={
         'stream_url': 'rtsp://camera.example.com/stream1',
@@ -650,7 +666,7 @@ mosquitto_pub -h localhost -p 1883 -t sensors/temperature -m '{"value": 22.5}'</
                 </div>
                 <div class="tab-content" id="rtsp-cli">
                     <div class="code-example">
-                        <pre><code># Create endpoint
+                        <pre><code class="language-bash"># Create endpoint
 uripoint --uri rtsp://localhost:8554/camera1 --data '{"stream_url": "rtsp://camera.example.com/stream1", "transport": "tcp"}'
 
 # Test endpoint
@@ -737,4 +753,328 @@ ffplay rtsp://localhost:8554/camera1</code></pre>
     </section>
 
     <section id="target-audience">
-        <div class
+        <div class="container">
+            <div class="section-title">
+                <h2>Target Audience</h2>
+                <p>UriPoint is designed for a variety of professionals working with distributed systems and network communications.</p>
+            </div>
+
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h3>Distributed Systems Developers</h3>
+                    <p>Building microservices architectures, managing service discovery, implementing API gateways, and developing service meshes.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h3>DevOps Engineers</h3>
+                    <p>Infrastructure automation, service deployment, monitoring setup, and configuration management.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <h3>IoT Specialists</h3>
+                    <p>Device management, sensor networks, data collection systems, and remote monitoring.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>Streaming Engineers</h3>
+                    <p>Video streaming services, live broadcast systems, security camera networks, and content delivery networks.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Backend Developers</h3>
+                    <p>API development, service integration, message queue implementation, and cache management.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="comparison">
+        <div class="container">
+            <div class="section-title">
+                <h2>Advantages Over Point Solutions</h2>
+                <p>UriPoint provides a comprehensive solution that goes beyond simple protocol handling, offering a complete platform for building, managing, and operating network communications.</p>
+            </div>
+
+            <div class="ascii-diagram">
+┌─────────────────────┐  ┌─────────────────────────┐
+│     UriPoint        │  │  Multiple Libraries     │
+├─────────────────────┤  ├─────────────────────────┤
+│ - Single interface  │  │ - Multiple interfaces   │
+│ - Unified config    │  │ - Separate configs      │
+│ - Built-in testing  │  │ - Custom testing needed │
+│ - One installation  │  │ - Multiple installs     │
+└─────────────────────┘  └─────────────────────────┘
+            </div>
+
+            <h3>Key Advantages</h3>
+            <div class="features">
+                <div class="feature-card">
+                    <h3>Development Speed</h3>
+                    <ul>
+                        <li>Single API to learn</li>
+                        <li>Consistent patterns</li>
+                        <li>Integrated tools</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>Maintenance</h3>
+                    <ul>
+                        <li>Centralized updates</li>
+                        <li>Unified logging</li>
+                        <li>Single point of configuration</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>Integration</h3>
+                    <ul>
+                        <li>Built-in protocol support</li>
+                        <li>Standardized error handling</li>
+                        <li>Common monitoring interface</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>Testing</h3>
+                    <ul>
+                        <li>Comprehensive test suite</li>
+                        <li>Cross-protocol testing</li>
+                        <li>Integrated monitoring</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="advanced-examples" class="protocols">
+        <div class="container">
+            <div class="section-title">
+                <h2>Advanced Examples</h2>
+                <p>UriPoint can handle complex scenarios involving multiple protocols and integrations.</p>
+            </div>
+
+            <div class="example-card">
+                <h3>Full IoT Monitoring System</h3>
+                <div class="code-example">
+                    <pre><code class="language-bash"># CLI Commands
+# Create MQTT endpoint for sensor data
+uripoint --uri mqtt://localhost:1883/sensors \
+         --data '{
+           "topics": ["sensors/#"],
+           "qos": 1
+         }'
+
+# Create Redis endpoint for data storage
+uripoint --uri redis://localhost:6379/sensor-data \
+         --data '{
+           "database": 1,
+           "expire": 3600
+         }'
+
+# Create HTTP API endpoint
+uripoint --uri http://localhost:8080/api/sensors \
+         --method GET POST \
+         --data '{
+           "cache": "redis://localhost:6379/sensor-data",
+           "mqtt": "mqtt://localhost:1883/sensors"
+         }'</code></pre>
+                </div>
+
+                <h4>Python Implementation</h4>
+                <div class="code-example">
+                    <pre><code class="language-python">from uripoint import UriPointCLI, SystemTest
+
+# Create system endpoints
+cli = UriPointCLI()
+
+# MQTT endpoint
+mqtt = cli.create_mqtt_endpoint(
+    uri='mqtt://localhost:1883/sensors',
+    data={
+        'topics': ['sensors/#'],
+        'qos': 1
+    }
+)
+
+# Redis endpoint
+redis = cli.create_redis_endpoint(
+    uri='redis://localhost:6379/sensor-data',
+    data={
+        'database': 1,
+        'expire': 3600
+    }
+)
+
+# HTTP API endpoint
+api = cli.create_endpoint(
+    uri='http://localhost:8080/api/sensors',
+    data={
+        'methods': ['GET', 'POST'],
+        'cache': 'redis://localhost:6379/sensor-data',
+        'mqtt': 'mqtt://localhost:1883/sensors'
+    }
+)
+
+# Create system test
+test = SystemTest([mqtt, redis, api])
+test.verify_integration()
+test.test_data_flow()
+test.check_performance()</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testing-framework">
+        <div class="container">
+            <div class="section-title">
+                <h2>Testing Framework</h2>
+                <p>UriPoint includes a comprehensive testing framework that ensures reliability and performance across all components.</p>
+            </div>
+
+            <h3>Common Test Cases</h3>
+            <div class="code-example">
+                <pre><code class="language-python"># Basic endpoint test
+test = EndpointTest(endpoint)
+test.run()
+
+# Protocol-specific tests
+test.verify_protocol()
+test.check_security()
+test.validate_performance()
+
+# Integration tests
+test.verify_dependencies()
+test.check_data_flow()
+test.test_failover()
+
+# Load tests
+test.concurrent_access(num_clients=100)
+test.sustained_load(duration=300)
+test.peak_performance()
+
+# Chaos tests
+test.network_partition()
+test.process_failure()
+test.data_corruption()</code></pre>
+            </div>
+
+            <h3>Test Configuration</h3>
+            <div class="code-example">
+                <pre><code class="language-yaml"># test_config.yaml
+tests:
+  performance:
+    concurrent_users: 100
+    duration: 300
+    thresholds:
+      latency_p95: 200
+      error_rate: 0.01
+
+  integration:
+    dependencies:
+      - redis
+      - mqtt
+      - http
+    timeout: 30
+
+  chaos:
+    scenarios:
+      - network_partition
+      - process_crash
+      - disk_full
+    duration: 600</code></pre>
+            </div>
+
+            <h3>Running Tests</h3>
+            <div class="code-example">
+                <pre><code class="language-bash"># Run all tests
+pytest tests/
+
+# Run specific test categories
+pytest tests/test_protocols.py
+pytest tests/test_performance.py
+pytest tests/test_integration.py
+pytest tests/test_chaos.py
+
+# Run with coverage report
+pytest --cov=uripoint tests/</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Simplify Your Network Endpoint Management?</h2>
+            <p>UriPoint provides a comprehensive solution for managing network endpoints across multiple protocols. Get started today!</p>
+            <div>
+                <a href="https://pypi.org/project/uripoint/" class="btn">Install from PyPI</a>
+                <a href="https://github.com/uripoint/python" class="btn btn-secondary">Explore on GitHub</a>
+                <a href="https://docs.uripoint.com" class="btn btn-secondary">Read the Docs</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="https://github.com/uripoint/python"><i class="fab fa-github"></i></a>
+                <a href="https://pypi.org/project/uripoint/"><i class="fab fa-python"></i></a>
+                <a href="https://docs.uripoint.com"><i class="fas fa-book"></i></a>
+                <a href="mailto:info@uripoint.com"><i class="fas fa-envelope"></i></a>
+            </div>
+            <div class="copyright">
+                &copy; <script>document.write(new Date().getFullYear())</script> UriPoint. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Add Prism JS for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+    <script>
+        // Simple tab functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Get the parent tab container
+                    const tabContainer = this.parentElement;
+
+                    // Get all tabs in this container
+                    const containerTabs = tabContainer.querySelectorAll('.tab');
+
+                    // Remove active class from all tabs
+                    containerTabs.forEach(t => t.classList.remove('active'));
+
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+
+                    // Get the tab content id
+                    const tabContentId = this.getAttribute('data-tab');
+
+                    // Get all tab contents
+                    const tabContents = document.querySelectorAll('.tab-content');
+
+                    // Hide all tab contents
+                    tabContents.forEach(content => content.classList.remove('active'));
+
+                    // Show the selected tab content
+                    document.getElementById(tabContentId).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
