@@ -1,4 +1,9 @@
+![uripoint-box.png](uripoint-box.png)
+
 # [UriPoint](http://www.uripoint.com) - Universal Network Endpoint Management
+
++ [github project](https://github.com/uripoint/python)
++ [python library](https://pypi.org/project/uripoint/)
 
 UriPoint is a comprehensive Python library designed for unified network endpoint management across multiple protocols. It simplifies the creation, management, and monitoring of network endpoints through a single, cohesive interface.
 

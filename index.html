@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UriPoint - Universal Network Endpoint Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --code-bg: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--light-color);
+        }
+
+        .hero {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin: 0 10px;
+        }
+
+        .btn:hover {
+            background-color: #c0392b;
+        }
+
+        .btn-secondary {
+            background-color: var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #2980b9;
+        }
+
+        section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: 5px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .protocols {
+            background-color: var(--light-color);
+        }
+
+        .protocol-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .protocol-category {
+            background-color: white;
+            border-radius: 5px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .protocol-category h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .protocol-category ul {
+            list-style: none;
+        }
+
+        .protocol-category ul li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .protocol-category ul li:last-child {
+            border-bottom: none;
+        }
+
+        .code-example {
+            background-color: var(--code-bg);
+            border-radius: 5px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .installation {
+            background-color: white;
+        }
+
+        .usage-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .example-card {
+            background-color: white;
+            border-radius: 5px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .example-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+
+        .tab {
+            padding: 0.5rem 1rem;
+            background-color: #eee;
+            cursor: pointer;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            margin-right: 5px;
+        }
+
+        .tab.active {
+            background-color: var(--code-bg);
+            font-weight: bold;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .architecture {
+            background-color: var(--light-color);
+        }
+
+        .ascii-diagram {
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre;
+            overflow-x: auto;
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+        }
+
+        .cta {
+            text-align: center;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 4rem 0;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta p {
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            font-size: 1.2rem;
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links a {
+            color: white;
+            margin: 0 15px;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+
+            nav ul {
+                margin-top: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .usage-examples {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">UriPoint</div>
+            <nav>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#protocols">Protocols</a></li>
+                    <li><a href="#installation">Installation</a></li>
+                    <li><a href="#usage">Usage</a></li>
+                    <li><a href="#architecture">Architecture</a></li>
+                    <li><a href="https://docs.uripoint.com">Documentation</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Universal Network Endpoint Management</h1>
+            <p>A comprehensive Python library designed for unified network endpoint management across multiple protocols. UriPoint simplifies the creation, management, and monitoring of network endpoints through a single, cohesive interface.</p>
+            <div>
+                <a href="https://pypi.org/project/uripoint/" class="btn">PyPI Package</a>
+                <a href="https://github.com/uripoint/python" class="btn btn-secondary">GitHub Repository</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Key Features</h2>
+                <p>UriPoint provides a comprehensive solution that goes beyond simple protocol handling, offering a complete platform for building, managing, and operating network communications.</p>
+            </div>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h3>Unified Management</h3>
+                    <p>Handle multiple protocols through one consistent interface, simplifying your network architecture and reducing complexity.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>Simplified Configuration</h3>
+                    <p>Easy setup through CLI or Python API with persistent YAML-based configuration storage.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-random"></i>
+                    </div>
+                    <h3>Protocol Agnostic</h3>
+                    <p>Support for web, streaming, IoT, and messaging protocols with protocol-specific optimizations and auto-negotiation.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Production Ready</h3>
+                    <p>Built-in monitoring, testing, and persistence with comprehensive testing framework and chaos engineering support.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h3>High Performance</h3>
+                    <p>Optimized communication, reduced overhead, and integrated caching for better performance across all protocols.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>Enhanced Security</h3>
+                    <p>Consistent security policies, unified authentication, and centralized monitoring across all endpoints.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="protocols" class="protocols">
+        <div class="container">
+            <div class="section-title">
+                <h2>Comprehensive Protocol Support</h2>
+                <p>UriPoint supports a wide range of protocols, making it suitable for various use cases from web services to IoT and streaming applications.</p>
+            </div>
+            <div class="protocol-list">
+                <div class="protocol-category">
+                    <h3>Web Protocols</h3>
+                    <ul>
+                        <li>HTTP/HTTPS</li>
+                        <li>WebSocket</li>
+                        <li>GraphQL</li>
+                    </ul>
+                </div>
+                <div class="protocol-category">
+                    <h3>Streaming</h3>
+                    <ul>
+                        <li>RTSP</li>
+                        <li>HLS</li>
+                        <li>DASH</li>
+                    </ul>
+                </div>
+                <div class="protocol-category">
+                    <h3>IoT</h3>
+                    <ul>
+                        <li>MQTT</li>
+                        <li>CoAP</li>
+                    </ul>
+                </div>
+                <div class="protocol-category">
+                    <h3>Messaging</h3>
+                    <ul>
+                        <li>AMQP</li>
+                        <li>ZeroMQ</li>
+                    </ul>
+                </div>
+                <div class="protocol-category">
+                    <h3>Storage</h3>
+                    <ul>
+                        <li>Redis</li>
+                        <li>MongoDB</li>
+                    </ul>
+                </div>
+                <div class="protocol-category">
+                    <h3>Other</h3>
+                    <ul>
+                        <li>Email (SMTP, IMAP)</li>
+                        <li>File Transfer (FTP, SFTP)</li>
+                        <li>Name Resolution (DNS)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="installation" class="installation">
+        <div class="container">
+            <div class="section-title">
+                <h2>Installation & Setup</h2>
+                <p>Getting started with UriPoint is simple and straightforward.</p>
+            </div>
+            <h3>Basic Installation</h3>
+            <div class="code-example">
+                <code>pip install uripoint</code>
+            </div>
+
+            <h3>Configuration</h3>
+            <p>UriPoint uses a YAML-based configuration file stored at <code>~/.uripoint_config.yaml</code>:</p>
+            <div class="code-example">
+                <pre><code># ~/.uripoint_config.yaml
+endpoints:
+  - name: api-endpoint
+    uri: http://localhost:8080/api
+    protocol: http
+    methods: [GET, POST]
+
+  - name: mqtt-sensor
+    uri: mqtt://broker:1883/sensors
+    protocol: mqtt
+    qos: 1</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section id="usage">
+        <div class="container">
+            <div class="section-title">
+                <h2>Usage Guide</h2>
+                <p>UriPoint provides both a CLI and Python API for managing endpoints.</p>
+            </div>
+
+            <h3>Service Lifecycle</h3>
+            <div class="ascii-diagram">
+┌──────────────┐   ┌──────────────┐   ┌──────────────┐
+│    Create    │   │  Configure   │   │    Deploy    │
+│   Endpoint   ├──►│   Protocol   ├──►│   Service    │
+└──────────────┘   └──────────────┘   └──────────────┘
+       ▲                                      │
+       │                                      ▼
+┌──────────────┐                    ┌──────────────┐
+│    Update    │◄───────────────────│   Monitor    │
+│ Configuration│                    │    Status    │
+└──────────────┘                    └──────────────┘
+            </div>
+
+            <div class="usage-examples">
+                <div class="example-card">
+                    <h3>CLI Commands</h3>
+                    <div class="code-example">
+                        <pre><code>uripoint [options] &lt;command&gt;
+
+# List all configured endpoints
+uripoint --list
+
+# Serve all endpoints as a live server
+uripoint --serve
+
+# Test endpoints
+uripoint --test
+
+# Detach specific endpoints
+uripoint --detach "http://localhost:9000/api/hello"</code></pre>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h3>Python API</h3>
+                    <div class="code-example">
+                        <pre><code>from uripoint import UriPointCLI
+
+cli = UriPointCLI()
+cli.create_endpoint(
+    uri='http://localhost:8000/api/users',
+    data={
+        'response': {'users': []},
+        'methods': ['GET', 'POST', 'PUT', 'DELETE']
+    }
+)
+
+# Start serving endpoints
+cli.serve()</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Protocol Examples</h3>
+
+            <div class="example-card">
+                <h3>HTTP/REST API</h3>
+                <div class="tabs">
+                    <div class="tab active" data-tab="http-python">Python</div>
+                    <div class="tab" data-tab="http-cli">CLI</div>
+                </div>
+                <div class="tab-content active" id="http-python">
+                    <div class="code-example">
+                        <pre><code>from uripoint import UriPointCLI
+
+cli = UriPointCLI()
+cli.create_endpoint(
+    uri='http://localhost:8000/api/users',
+    data={
+        'response': {'users': []},
+        'methods': ['GET', 'POST', 'PUT', 'DELETE']
+    }
+)</code></pre>
+                    </div>
+                </div>
+                <div class="tab-content" id="http-cli">
+                    <div class="code-example">
+                        <pre><code># Create endpoint
+uripoint --uri http://localhost:8000/api/users --data '{"response": {"users": []}}' --method GET POST PUT DELETE
+
+# Test endpoint
+curl -X GET http://localhost:8000/api/users</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <h3>MQTT IoT Device</h3>
+                <div class="tabs">
+                    <div class="tab active" data-tab="mqtt-python">Python</div>
+                    <div class="tab" data-tab="mqtt-cli">CLI</div>
+                </div>
+                <div class="tab-content active" id="mqtt-python">
+                    <div class="code-example">
+                        <pre><code>cli.create_endpoint(
+    uri='mqtt://localhost:1883/sensors/temperature',
+    data={
+        'topic': 'sensors/temperature',
+        'qos': 1,
+        'device': {
+            'type': 'temperature',
+            'location': 'room1'
+        }
+    }
+)</code></pre>
+                    </div>
+                </div>
+                <div class="tab-content" id="mqtt-cli">
+                    <div class="code-example">
+                        <pre><code># Create endpoint
+uripoint --uri mqtt://localhost:1883/sensors/temperature --data '{"topic": "sensors/temperature", "qos": 1}'
+
+# Test endpoint
+mosquitto_pub -h localhost -p 1883 -t sensors/temperature -m '{"value": 22.5}'</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <h3>RTSP Stream</h3>
+                <div class="tabs">
+                    <div class="tab active" data-tab="rtsp-python">Python</div>
+                    <div class="tab" data-tab="rtsp-cli">CLI</div>
+                </div>
+                <div class="tab-content active" id="rtsp-python">
+                    <div class="code-example">
+                        <pre><code>cli.create_endpoint(
+    uri='rtsp://localhost:8554/camera1',
+    data={
+        'stream_url': 'rtsp://camera.example.com/stream1',
+        'transport': 'tcp'
+    }
+)</code></pre>
+                    </div>
+                </div>
+                <div class="tab-content" id="rtsp-cli">
+                    <div class="code-example">
+                        <pre><code># Create endpoint
+uripoint --uri rtsp://localhost:8554/camera1 --data '{"stream_url": "rtsp://camera.example.com/stream1", "transport": "tcp"}'
+
+# Test endpoint
+ffplay rtsp://localhost:8554/camera1</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="architecture" class="architecture">
+        <div class="container">
+            <div class="section-title">
+                <h2>Architecture</h2>
+                <p>UriPoint is built with a modular architecture that separates concerns and provides flexibility.</p>
+            </div>
+
+            <h3>System Components</h3>
+            <div class="ascii-diagram">
+┌───────────────────────────────────────────────────────┐
+│                    UriPoint System                    │
+├───────────────┬──────────────────┬────────────────────┤
+│ Core Engine   │ Protocol Layer   │ Management Layer   │
+├───────────────┼──────────────────┼────────────────────┤
+│ - Config      │ - HTTP/HTTPS     │ - CLI Interface    │
+│ - Persistence │ - MQTT           │ - API Interface    │
+│ - Monitoring  │ - RTSP           │ - Web Dashboard    │
+│ - Testing     │ - Redis          │ - Monitoring UI    │
+└───────────────┴──────────────────┴────────────────────┘
+            </div>
+
+            <h3>Component Interaction</h3>
+            <ol>
+                <li>
+                    <strong>Core Engine</strong>
+                    <ul>
+                        <li>Configuration management</li>
+                        <li>State persistence</li>
+                        <li>Event handling</li>
+                        <li>Resource management</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Protocol Layer</strong>
+                    <ul>
+                        <li>Protocol-specific handlers</li>
+                        <li>Data transformation</li>
+                        <li>Connection management</li>
+                        <li>Error handling</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Management Layer</strong>
+                    <ul>
+                        <li>User interfaces</li>
+                        <li>Monitoring tools</li>
+                        <li>Administration features</li>
+                        <li>Reporting systems</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3>Testing Framework</h3>
+            <div class="ascii-diagram">
+┌────────────────────────┐  ┌─────────────────────────┐
+│   Performance Tests    │  │   Integration Tests     │
+├────────────────────────┤  ├─────────────────────────┤
+│ - Endpoint Creation    │  │ - Component Interaction │
+│ - Concurrent Access    │  │ - Multi-Protocol        │
+│ - Memory Usage         │  │ - Process Management    │
+│ - Protocol Handlers    │  │ - Error Propagation     │
+└────────────────────────┘  └─────────────────────────┘
+
+┌────────────────────────┐  ┌─────────────────────────┐
+│     Chaos Tests        │  │    Protocol Tests       │
+├────────────────────────┤  ├─────────────────────────┤
+│ - Random Operations    │  │ - Protocol Validation   │
+│ - Process Chaos        │  │ - Handler Behavior      │
+│ - Network Simulation   │  │ - Configuration         │
+│ - Data Input Chaos     │  │ - Error Handling        │
+└────────────────────────┘  └─────────────────────────┘
+            </div>
+        </div>
+    </section>
+
+    <section id="target-audience">
+        <div class
